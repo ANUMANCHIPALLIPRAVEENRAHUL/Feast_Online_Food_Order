@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feast Admin - FEAST</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            padding-top: 80px; /* Add padding to prevent content from touching the header */
+        }
+
+        header {
+            background: #ff4500;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav ul li a:hover {
+            background-color: white;
+            color: #ff4500;
+            transform: translateY(-2px);
+        }
+
+        nav ul li a i {
+            font-size: 18px;
+        }
+
+        .orders, .delivery-requests, .delivery-people {
+            padding: 100px 20px;
+            background: #fff;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background: #ff4500;
+            color: white;
+        }
+
+        table tr:hover {
+            background: #f5f5f5;
+        }
+
+        table a {
+            color: #ff4500;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        table a:hover {
+            text-decoration: underline;
+        }
+
+        .messages {
+            margin: 10px 0;
+        }
+
+        .alert {
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .alert-success {
+            background-color: #28a745; /* Green for success messages */
+        }
+
+        .alert-error {
+            background-color: #dc3545; /* Red for error messages */
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdjrMErVvOqpAeiM4NRXnMqEROjp4am5RFF6tOXKuPWYYLQrFYM1-7D4_J3TMHXp0VETI&usqp=CAU" alt="FEAST Logo"> 
+            <h1>FEAST</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#delivery-requests"><i class="fas fa-motorcycle"></i> Delivery Requests</a></li>
+                <li><a href="#delivery-people"><i class="fas fa-users"></i> Delivery People</a></li>
+                <li><a href="#orders"><i class="fas fa-shopping-bag"></i> Orders</a></li>
+                <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                <li><a href="{% url 'about_us' %}"><i class="fas fa-info-circle"></i> About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Display success messages -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" id="successMessage">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <section id="delivery-requests" class="delivery-requests">
+        <h2>Delivery Requests</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>User ID</th>
+                    <th>Phone Number</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for delivery_boy in delivery_boys %}
+                <tr>
+                    <td>{{ delivery_boy.full_name }}</td>
+                    <td>{{ delivery_boy.user_id }}</td>
+                    <td>{{ delivery_boy.number }}</td>
+                    <td>{{ delivery_boy.status }}</td>
+                    <td>
+                        {% if delivery_boy.status == 'not_accepted' %}
+                        <a href="{% url 'accept_delivery_boy' delivery_boy.id %}">Accept</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section id="delivery-people" class="delivery-people">
+        <h2>Delivery People</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>User ID</th>
+                    <th>Phone Number</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for delivery_boy in accepted_delivery_boys %}
+                <tr>
+                    <td>{{ delivery_boy.full_name }}</td>
+                    <td>{{ delivery_boy.user_id }}</td>
+                    <td>{{ delivery_boy.number }}</td>
+                    <td>{{ delivery_boy.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section id="orders" class="orders">
+        <h2>Orders</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Food Item</th>
+                    <th>Address</th>
+                    <th>Order Datetime</th>
+                    <th>Delivered By</th>
+                    <th>Accepted Datetime</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.customer.name }}</td>
+                    <td>{{ order.food_item.name }}</td>
+                    <td>{{ order.address }}</td>
+                    <td>{{ order.order_date|date:"d M Y H:i" }}</td>  <!-- Format order date -->
+                    <td>
+                        {% if order.delivery_boy %}
+                            {{ order.delivery_boy.full_name }}
+                        {% else %}
+                            Not Assigned
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if order.accepted_time %}
+                            {{ order.accepted_time|date:"d M Y H:i" }}  <!-- Format accepted time -->
+                        {% else %}
+                            Not Accepted
+                        {% endif %}
+                    </td>
+                    <td>{{ order.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FEAST - All Rights Reserved</p>
+    </footer>
+
+    <!-- Hide success message after 2 seconds -->
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+        }, 2000);  // 2000 milliseconds = 2 seconds
+    </script>
+</body>
+</html>

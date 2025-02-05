@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - FEAST</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(255, 69, 0, 0.9);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        nav ul li a:hover {
+            background-color: white;
+            color: #ff4500;
+            transform: translateY(-2px);
+        }
+
+        .about-us {
+            padding: 150px 20px 50px;
+            background-color: #fff;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .about-us h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #ff4500;
+            font-weight: 700;
+        }
+
+        .about-us p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 280px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card i {
+            font-size: 50px;
+            color: #ff4500;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdjrMErVvOqpAeiM4NRXnMqEROjp4am5RFF6tOXKuPWYYLQrFYM1-7D4_J3TMHXp0VETI&usqp=CAU" alt="FEAST Logo"> 
+            <h1>FEAST</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="{% url 'about_us' %}" class="active"><i class="fas fa-info-circle"></i> About Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="about-us">
+        <h2>Welcome to FEAST</h2>
+        <p>Your one-stop destination for hassle-free online food ordering. We connect food lovers with the best restaurants and reliable delivery services.</p>
+        <div class="card-container">
+            <div class="card">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Discover Places</h3>
+                <p>Find the best restaurants near you effortlessly.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-hamburger"></i>
+                <h3>Order Your Favorites</h3>
+                <p>Enjoy delicious meals with just a few clicks.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-truck"></i>
+                <h3>Fast Delivery</h3>
+                <p>Get your food delivered swiftly and safely.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 FEAST - Delivering Excellence, One Meal at a Time</p>
+    </footer>
+</body>
+</html>
